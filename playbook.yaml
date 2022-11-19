@@ -1,0 +1,73 @@
+- hosts: all
+  become: true
+  gather_facts: yes
+  tasks:
+
+
+    - name: "Install pre-requisite packages for tool stack"
+      apt:
+        pkg:
+          - gnupg
+          - software-properties-common
+          - curl
+          - python3
+          - git
+          - python3-pip 
+        state: present
+        update_cache: yes
+
+    - name: "Install Jinja2 python package"
+      pip:
+        name: jinja2
+
+    - name: "Install net-addr python package"
+      pip:
+        name: netaddr
+
+    - name: "Add apt signing key for Terraform"
+      apt_key:
+        url: https://apt.releases.hashicorp.com/gpg
+        state: present
+
+    - name: "Add Terraform repository into sources list"
+      apt_repository:
+        repo: deb [arch=amd64] https://apt.releases.hashicorp.com jammy main
+        state: present
+
+    - name: "Install Terraform"
+      apt:
+        name: terraform
+        state: present
+        update_cache: yes
+
+    - name: "Install Ansible PPA repository"
+      apt_repository:
+        validate_certs: yes
+        repo: 'ppa:ansible/ansible'
+        state: present
+
+    - name: "Install Ansible"
+      apt:
+        name: ansible
+        state: present
+        update_cache: yes
+
+    - name: "Download Helm v3.10.2"
+      shell: wget https://get.helm.sh/helm-v3.10.2-linux-amd64.tar.gz -O helm.tar.gz
+      args:
+        chdir: /root
+
+    - name: "Extract Helm"
+      shell: tar -xzvf helm.tar.gz
+      args:
+        chdir: /root
+
+    - name: "Install Helm"
+      shell: mv linux-amd64/helm /usr/local/bin
+      args:
+        chdir: /root
+
+    - name: "Clean up"
+      shell: rm -rf helm.tar.gz linux-amd64/
+      args:
+        chdir: /root
