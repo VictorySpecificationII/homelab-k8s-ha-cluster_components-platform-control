@@ -71,3 +71,8 @@
       shell: rm -rf helm.tar.gz linux-amd64/
       args:
         chdir: /root
+
+    - name: "Clone Kubespray repository"
+      shell: git clone https://github.com/kubernetes-sigs/kubespray.git
+      args:
+        chdir: /root
