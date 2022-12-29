@@ -12,7 +12,9 @@
           - curl
           - python3
           - git
-          - python3-pip 
+          - python3-pip
+          - podman
+          - containerd 
         state: present
         update_cache: yes
 
