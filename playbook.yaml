@@ -26,6 +26,10 @@
       pip:
         name: netaddr
 
+    - name: "Install net-addr python package"
+      pip:
+        name: virtualenv
+
     - name: "Add apt signing key for Terraform"
       apt_key:
         url: https://apt.releases.hashicorp.com/gpg
