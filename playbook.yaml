@@ -78,3 +78,6 @@
       shell: git clone https://github.com/kubernetes-sigs/kubespray.git
       args:
         chdir: /root
+
+    - name: "Pull Kubespray image"
+      shell: podman pull quay.io/kubespray/kubespray:v2.20.0
